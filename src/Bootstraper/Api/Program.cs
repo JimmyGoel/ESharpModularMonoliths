@@ -1,6 +1,3 @@
-using Basket;
-using Catalog;
-using Ordering;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,5 +10,8 @@ builder.Services
 var app = builder.Build();
 
 // configure the HTTP request pipeline.
+app.UseCatalogModule()
+   .UseBasketModule()
+   .UseOrderingModule();
 
 app.Run();
