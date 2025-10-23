@@ -24,7 +24,6 @@ namespace Catalog.Products.Models
                 Description = description,
                 ImageFile = imageFile,
                 Price = price,
-                CreatedAt = DateTime.UtcNow
             };
 
             product.AddDomainEvent(new ProductCreatedEvent(product));
@@ -40,7 +39,6 @@ namespace Catalog.Products.Models
             Description = description;
             ImageFile = imageFile;
             Price = price;
-            LastModified = DateTime.UtcNow;
 
             if (Price != price)
             {

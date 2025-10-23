@@ -1,7 +1,9 @@
 ﻿
 using Microsoft.AspNetCore.Builder;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+
 
 namespace Catalog
 {
@@ -14,23 +16,40 @@ namespace Catalog
             // Api Endpoint Services
 
             // Applcation Use Case Services.
+            services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 
             // Data - Infrastructure Services
 
             var conectionString = configuration.GetConnectionString("Database");
 
-            services.AddDbContext<CatalogDbContext>(options =>
+            services.AddScoped<ISaveChangesInterceptor, AuditableEntityInterceptor>();
+            services.AddScoped<ISaveChangesInterceptor, DispatchDomainEventInterceptor>();
+
+            services.AddDbContext<CatalogDbContext>((sp, options) =>
             {
+                options.AddInterceptors(sp.GetServices<ISaveChangesInterceptor>());
                 options.UseNpgsql(conectionString);
             });
 
+            services.AddScoped<IDataSeeder, CatalogDataSeeder>();
             return services;
         }
 
         public static IApplicationBuilder UseCatalogModule(this IApplicationBuilder app)
         {
-            // Add Catalog module services here
+            // Configuration the HTTP request pipeline.
+
+            // 1. Use Api Endpoint Services
+
+            // 2. Use Applcation Use Case Services.
+
+            // 3. Use Data - Infrastructure Services
+
+            app.UseMigration<CatalogDbContext>();
+
             return app;
         }
+
+
     }
 }
