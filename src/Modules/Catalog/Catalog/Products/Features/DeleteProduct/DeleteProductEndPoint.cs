@@ -1,17 +1,16 @@
 ﻿
 namespace Catalog.Products.Features.DeleteProduct
 {
-    public record DeleteProductRequest(string Id);
+    //public record DeleteProductRequest(string Id);
     public record DeleteProductResponse(bool IsSuccess);
     public class DeleteProductEndPoint : ICarterModule
     {
         public void AddRoutes(IEndpointRouteBuilder app)
         {
-            app.MapDelete("/products", async (DeleteProductRequest request, ISender sender) =>
+            app.MapDelete("/products/{Id}", async (Guid Id, ISender sender) =>
             {
-                var command = request.Adapt<DeleteProductCommand>();
-                var result = await sender.Send(command);
-                var response = request.Adapt<DeleteProductResponse>();
+                var result = await sender.Send(new DeleteProductCommand(Id));
+                var response = result.Adapt<DeleteProductResponse>();
                 return Results.Ok(response);
             })
           .WithName("DeleteProduct")

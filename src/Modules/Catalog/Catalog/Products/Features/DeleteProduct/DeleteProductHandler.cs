@@ -1,6 +1,6 @@
 ﻿namespace Catalog.Products.Features.DeleteProduct
 {
-    public record DeleteProductCommand(ProductDto Product)
+    public record DeleteProductCommand(Guid ProductId)
    : ICommand<DeleteProductResult>;
     public record DeleteProductResult(bool IsSuccess);
     internal class DeleteProductHandler(CatalogDbContext dbContext)
@@ -9,10 +9,10 @@
         public async Task<DeleteProductResult> Handle(DeleteProductCommand command, CancellationToken cancellationToken)
         {
             var product = await dbContext.Products
-               .FindAsync([command.Product.Id], cancellationToken);
+               .FindAsync([command.ProductId], cancellationToken);
             if (product is null)
             {
-                throw new Exception($"Product Not found : {command.Product.Id}");
+                throw new Exception($"Product Not found : {command.ProductId}");
             }
             dbContext.Products.Remove(product);
             await dbContext.SaveChangesAsync(cancellationToken);

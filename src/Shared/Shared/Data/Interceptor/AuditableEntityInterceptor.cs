@@ -30,6 +30,7 @@ namespace Shared.Data.Interceptor
         private void UpdateEntities(DbContext? context)
         {
             if (context == null) return;
+
             foreach (var entry in context.ChangeTracker.Entries<IEntity>())
             {
                 if (entry.State == EntityState.Added)

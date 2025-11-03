@@ -3,7 +3,7 @@
 namespace Catalog.Products.Features.CreateProduct
 {
     public record CreateProductRequest(ProductDto Product);
-    public record CreateProductResponse(Guid ProductId);
+    public record CreateProductResponse(Guid Id);
     public class CreateProductEndpoint : ICarterModule
     {
         public void AddRoutes(IEndpointRouteBuilder app)
@@ -12,8 +12,8 @@ namespace Catalog.Products.Features.CreateProduct
             {
                 var command = request.Adapt<CreateProductCommand>();
                 var result = await sender.Send(command);
-                var response = request.Adapt<CreateProductResponse>();
-                return Results.Created($"/products/{result.ProductId}", response);
+                var response = result.Adapt<CreateProductResponse>();
+                return Results.Created($"/products/{response.Id}", response);
             })
             .WithName("CreateProduct")
             .Produces<CreateProductResponse>(StatusCodes.Status201Created)
