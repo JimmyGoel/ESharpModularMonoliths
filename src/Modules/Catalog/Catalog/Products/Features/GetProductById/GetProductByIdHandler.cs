@@ -5,6 +5,14 @@ namespace Catalog.Products.Features.GetProductById
     public record GetProductsByIdQuery(Guid Id)
    : IQuery<GetProductsByIdResult>;
     public record GetProductsByIdResult(ProductDto Product);
+
+    public class GetProductsByIdValidator : AbstractValidator<GetProductsByIdQuery>
+    {
+        public GetProductsByIdValidator()
+        {
+            RuleFor(c => c.Id).NotEmpty().WithMessage("Id is required");
+        }
+    }
     internal class GetProductByIdHandler(CatalogDbContext dbContext)
             : IQueryHandler<GetProductsByIdQuery, GetProductsByIdResult>
     {
@@ -16,11 +24,11 @@ namespace Catalog.Products.Features.GetProductById
                 .SingleOrDefaultAsync(e => e.Id == query.Id, cancellationToken);
             if (product is null)
             {
-                throw new Exception($"Product Not found : {query.Id}");
+                throw new ProductNotFoundException(query.Id);
             }
             var productDto = product.Adapt<ProductDto>();
             return new GetProductsByIdResult(productDto);
         }
     }
-    
+
 }

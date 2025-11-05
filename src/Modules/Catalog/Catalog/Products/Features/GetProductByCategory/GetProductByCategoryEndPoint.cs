@@ -1,7 +1,7 @@
 ﻿
 namespace Catalog.Products.Features.GetProductByCategory
 {
-    public record GetProductByCategoryResponse(IEnumerable<ProductDto> Product);
+    public record GetProductByCategoryResponse(IEnumerable<ProductDto> Products);
     public class GetProductByCategoryEndPoint : ICarterModule
     {
         public void AddRoutes(IEndpointRouteBuilder app)
@@ -10,7 +10,7 @@ namespace Catalog.Products.Features.GetProductByCategory
             {
                 var result = await sender.Send(new GetProductsByCategoryQuery(category));
                 var response = result.Adapt<GetProductByCategoryResponse>();
-                return Results.Ok(response.Product);
+                return Results.Ok(response.Products);
             })
          .WithName("GetProductByCategory")
          .Produces<GetProductByCategoryResponse>(StatusCodes.Status201Created)

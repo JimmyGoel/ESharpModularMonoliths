@@ -15,7 +15,7 @@ namespace Catalog.Products.Features.GetProducts
                 .OrderBy(e => e.Name)
                 .ToListAsync(cancellationToken);
 
-            var productsDto = products.Adapt<IEnumerable<ProductDto>>();
+            var productsDto = products.Adapt<List<ProductDto>>();
 
             return new GetProductsResult(productsDto);
         }

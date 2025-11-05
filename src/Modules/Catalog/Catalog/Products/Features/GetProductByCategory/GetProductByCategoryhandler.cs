@@ -1,8 +1,4 @@
-﻿using Catalog.Products.Features.GetProductById;
-using Microsoft.EntityFrameworkCore;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
-
-namespace Catalog.Products.Features.GetProductByCategory
+﻿namespace Catalog.Products.Features.GetProductByCategory
 {
     public record GetProductsByCategoryQuery(string category)
   : IQuery<GetProductsByCategoryResult>;

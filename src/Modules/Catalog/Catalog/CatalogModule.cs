@@ -1,6 +1,4 @@
-﻿
-using Microsoft.AspNetCore.Builder;
-using Microsoft.EntityFrameworkCore.Diagnostics;
+﻿using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -16,7 +14,13 @@ namespace Catalog
             // Api Endpoint Services
 
             // Applcation Use Case Services.
-            services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
+            services.AddMediatR(cfg =>
+            {
+                cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
+                cfg.AddOpenBehavior(typeof(ValidationBehavior<,>));
+            });
+
+            services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
             // Data - Infrastructure Services
 

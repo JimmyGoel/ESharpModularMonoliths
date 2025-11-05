@@ -11,7 +11,7 @@ namespace Catalog.Products.Features.UpdateProduct
             {
                 var command = request.Adapt<UpdateProductCommand>();
                 var result = await sender.Send(command);
-                var response = request.Adapt<UpdateProductResponse>();
+                var response = result.Adapt<UpdateProductResponse>();
                 return Results.Ok(response);
             })
            .WithName("UpdateProduct")
