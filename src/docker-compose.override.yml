@@ -11,11 +11,19 @@ services:
     volumes:
       - postgres_eshopdb:/var/lib/postgresql/data/
   seq:
+    image: datalust/seq:latest
     container_name: seq
+    restart: unless-stopped
     environment:
-      - ACCEPT_EULA=Y
-    restart: always
+      ACCEPT_EULA: "Y"
+      SEQ_FIRSTRUN_ADMINUSERNAME: "admin"
+      SEQ_FIRSTRUN_ADMINPASSWORD: "Test@123"
+      SEQ_BASEURI: "http://localhost:9091"
     ports:
-      - "5341:5341"
       - "9091:80"
+      - "5341:5341"
+    volumes:
+      - seq-data:/data
+volumes:
+  seq-data:
 
