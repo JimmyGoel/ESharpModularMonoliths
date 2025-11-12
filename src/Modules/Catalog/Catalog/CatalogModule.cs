@@ -14,14 +14,14 @@ namespace Catalog
             // Api Endpoint Services
 
             // Applcation Use Case Services.
-            services.AddMediatR(cfg =>
-            {
-                cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
-                cfg.AddOpenBehavior(typeof(ValidationBehavior<,>));
-                cfg.AddOpenBehavior(typeof(LoggingBehavior<,>));
-            });
+            //services.AddMediatR(cfg =>
+            //{
+            //    cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
+            //    cfg.AddOpenBehavior(typeof(ValidationBehavior<,>));
+            //    cfg.AddOpenBehavior(typeof(LoggingBehavior<,>));
+            //});
 
-            services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+            //services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
             // Data - Infrastructure Services
 

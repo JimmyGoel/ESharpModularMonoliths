@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Shared.Behaviour;
 
 
 namespace Basket
@@ -14,6 +15,14 @@ namespace Basket
             // Add Catalog module services here
 
             // Data - Infrastructure Services
+            //services.AddMediatR(cfg =>
+            //{
+            //    cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
+            //    cfg.AddOpenBehavior(typeof(ValidationBehavior<,>));
+            //    cfg.AddOpenBehavior(typeof(LoggingBehavior<,>));
+            //});
+
+            //services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
             var conectionString = configuration.GetConnectionString("Database");
 
