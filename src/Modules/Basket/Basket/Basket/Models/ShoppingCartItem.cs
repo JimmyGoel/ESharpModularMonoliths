@@ -12,7 +12,7 @@ namespace Basket.Basket.Models
         public decimal Price { get; private set; } = default!;
         public String ProductName { get; private set; } = default!;
 
-        internal ShoppingCartItem(Guid shoppingCartId, Guid productId, int quantity, string color, decimal price, string productName)
+        public ShoppingCartItem(Guid shoppingCartId, Guid productId, int quantity, string color, decimal price, string productName)
         {
             ShoppingCartId = shoppingCartId;
             ProductId = productId;

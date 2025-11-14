@@ -25,8 +25,17 @@ namespace Basket.Basket.Features.AddItemIntoBasket
             {
                 throw new BasketNotFoundException(request.UserName);
             }
+            var item = new ShoppingCartItem
+               (
+                   request.Item.Id,
+                   request.Item.ProductId,
+                   request.Item.Quantity,
+                   request.Item.ProductName,
+                   request.Item.Price,
+                   request.Item.Color
+               );
 
-            shoppingCart.AddItem(request.Item.Adapt<ShoppingCartItem>());
+            shoppingCart.AddItem(item);
             await basketDb.SaveChangesAsync(cancellationToken);
             return new AddItemIntoBasketResult(shoppingCart.Id);
         }
