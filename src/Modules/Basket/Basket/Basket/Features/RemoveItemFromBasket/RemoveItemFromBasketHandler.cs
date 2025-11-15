@@ -12,21 +12,15 @@
             RuleFor(x => x.ProductId).NotEmpty().WithMessage("ProductId Required");
         }
     }
-    internal class RemoveItemFromBasketHandler(BasketDbContext basketDb) : ICommandHandler<RemoveItemFromBasketCommand, RemoveItemFromBasketResult>
+    public class RemoveItemFromBasketHandler(IBasketRepository basketRepository) : ICommandHandler<RemoveItemFromBasketCommand, RemoveItemFromBasketResult>
     {
         public async Task<RemoveItemFromBasketResult> Handle(RemoveItemFromBasketCommand request, CancellationToken cancellationToken)
         {
-            var shoppingCart = await basketDb.ShoppingCarts
-                .Include(c => c.Items)
-                .SingleOrDefaultAsync(c => c.UserName == request.UserName, cancellationToken);
-            if (shoppingCart == null)
-            {
-                throw new BasketNotFoundException(request.UserName);
-            }
-            shoppingCart.RemoveItem(request.ProductId);
-            await basketDb.SaveChangesAsync(cancellationToken);
-            return new RemoveItemFromBasketResult(shoppingCart.Id);
+            var shoppingCart = await basketRepository.GetBasket(request.UserName, false, cancellationToken: cancellationToken);
+            shoppingCart?.RemoveItem(request.ProductId);
+            await basketRepository.SaveChangesAsync(cancellationToken);
+            return new RemoveItemFromBasketResult(shoppingCart!.Id);
         }
     }
-  
+
 }

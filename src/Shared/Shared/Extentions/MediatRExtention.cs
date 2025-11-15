@@ -8,7 +8,7 @@ namespace Shared.Extentions
     public static class MediatRExtention
     {
         public static IServiceCollection AddMediatRWithAssemblies(
-            this IServiceCollection services, 
+            this IServiceCollection services,
             params Assembly[] assemblies)
         {
             services.AddMediatR(cfg =>

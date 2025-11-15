@@ -12,11 +12,11 @@ namespace Shared.Behaviour
     {
         public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
         {
-            logger.LogInformation("[Start] Handling {RequestType} - Response {Request} requestData = {RequesstData} ", 
+            logger.LogInformation("[Start] Handling {RequestType} - Response {Request} requestData = {RequesstData} ",
                 typeof(TRequest).Name, typeof(TResponse).Name, request);
 
             var timer = Stopwatch.StartNew();
-            var response = await next(); 
+            var response = await next();
             timer.Stop();
 
             var timeTaken = timer.Elapsed.TotalSeconds;

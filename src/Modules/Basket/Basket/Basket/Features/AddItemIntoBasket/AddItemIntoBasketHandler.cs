@@ -14,17 +14,11 @@ namespace Basket.Basket.Features.AddItemIntoBasket
             RuleFor(x => x.Item.Quantity).GreaterThan(0).WithMessage("Quantity must be greater then 0");
         }
     }
-    public class AddItemIntoBasketHandler(BasketDbContext basketDb) : ICommandHandler<AddItemIntoBasketCommand, AddItemIntoBasketResult>
+    public class AddItemIntoBasketHandler(IBasketRepository basketRepository) : ICommandHandler<AddItemIntoBasketCommand, AddItemIntoBasketResult>
     {
         public async Task<AddItemIntoBasketResult> Handle(AddItemIntoBasketCommand request, CancellationToken cancellationToken)
         {
-            var shoppingCart = await basketDb.ShoppingCarts
-                .Include(c => c.Items)
-                .SingleOrDefaultAsync(c => c.UserName == request.UserName, cancellationToken);
-            if (shoppingCart == null)
-            {
-                throw new BasketNotFoundException(request.UserName);
-            }
+            var shoppingCart = await basketRepository.GetBasket(request.UserName, false, cancellationToken: cancellationToken);
             var item = new ShoppingCartItem
                (
                    request.Item.Id,
@@ -35,9 +29,9 @@ namespace Basket.Basket.Features.AddItemIntoBasket
                    request.Item.Color
                );
 
-            shoppingCart.AddItem(item);
-            await basketDb.SaveChangesAsync(cancellationToken);
-            return new AddItemIntoBasketResult(shoppingCart.Id);
+            shoppingCart?.AddItem(item);
+            await basketRepository.SaveChangesAsync(cancellationToken);
+            return new AddItemIntoBasketResult(shoppingCart!.Id);
         }
     }
 }

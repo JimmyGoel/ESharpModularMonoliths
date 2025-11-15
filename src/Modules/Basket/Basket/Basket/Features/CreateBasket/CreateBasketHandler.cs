@@ -12,14 +12,15 @@ namespace Basket.Basket.Features.CreateBasket
             RuleFor(x => x.ShoppingCart.UserName).NotEmpty().WithMessage("UserName is required");
         }
     }
-    internal class CreateBasketHandler(BasketDbContext basketDb)
+    internal class CreateBasketHandler(IBasketRepository basketRepository)
         : ICommandHandler<CreateBasketCommand, CreateBasketResult>
     {
         public async Task<CreateBasketResult> Handle(CreateBasketCommand request, CancellationToken cancellationToken)
         {
             var shoppingCart = CreateNewBasket(request.ShoppingCart);
-            basketDb.ShoppingCarts.Add(shoppingCart);
-            await basketDb.SaveChangesAsync(cancellationToken);
+
+            await basketRepository.CreateBasket(shoppingCart, cancellationToken);
+
             return new CreateBasketResult(shoppingCart.Id);
         }
 
