@@ -10,6 +10,13 @@ services:
       - "5432:5432"
     volumes:
       - postgres_eshopdb:/var/lib/postgresql/data/
+
+  distributedcahce:
+    container_name: distributedcahce
+    restart: always
+    ports:
+      - "6379:6379"
+   
   seq:
     image: datalust/seq:latest
     container_name: seq

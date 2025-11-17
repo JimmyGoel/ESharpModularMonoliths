@@ -30,7 +30,7 @@ namespace Basket.Basket.Features.AddItemIntoBasket
                );
 
             shoppingCart?.AddItem(item);
-            await basketRepository.SaveChangesAsync(cancellationToken);
+            await basketRepository.SaveChangesAsync(request.UserName, cancellationToken);
             return new AddItemIntoBasketResult(shoppingCart!.Id);
         }
     }

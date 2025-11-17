@@ -18,7 +18,7 @@
         {
             var shoppingCart = await basketRepository.GetBasket(request.UserName, false, cancellationToken: cancellationToken);
             shoppingCart?.RemoveItem(request.ProductId);
-            await basketRepository.SaveChangesAsync(cancellationToken);
+            await basketRepository.SaveChangesAsync(request.UserName, cancellationToken);
             return new RemoveItemFromBasketResult(shoppingCart!.Id);
         }
     }

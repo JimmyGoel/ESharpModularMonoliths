@@ -1,5 +1,4 @@
 ﻿
-
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,6 +11,7 @@ namespace Basket
         public static IServiceCollection AddBasketModule(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddScoped<IBasketRepository, BasketRepository>();
+            services.Decorate<IBasketRepository, CachedBasketRepositry>();
             // Add Catalog module services here
 
             var conectionString = configuration.GetConnectionString("Database");

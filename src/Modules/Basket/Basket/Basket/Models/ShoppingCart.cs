@@ -5,10 +5,10 @@ namespace Basket.Basket.Models
     public class ShoppingCart : Aggregrate<Guid>
     {
         public string UserName { get; private set; } = default!;
-        public List<ShoppingCartItem> Items { get; private set; } = new();
+        private readonly List<ShoppingCartItem> _items = new();
 
-        public IReadOnlyList<ShoppingCartItem> items()
-            => Items.AsReadOnly();
+        public IReadOnlyList<ShoppingCartItem> Items
+            => _items.AsReadOnly();
         public decimal TotalPrice
             => Items.Sum(item => item.Price * item.Quantity);
 
@@ -27,22 +27,22 @@ namespace Basket.Basket.Models
             ArgumentOutOfRangeException.ThrowIfNegativeOrZero(item.Quantity, nameof(item.Quantity));
             ArgumentOutOfRangeException.ThrowIfNegative(item.Price, nameof(item.Price));
 
-            var existingItem = Items.FirstOrDefault(i => i.ProductId == item.ProductId);
+            var existingItem = _items.FirstOrDefault(i => i.ProductId == item.ProductId);
             if (existingItem != null)
             {
                 existingItem.Quantity += item.Quantity;
             }
             else
             {
-                Items.Add(item);
+                _items.Add(item);
             }
         }
         public void RemoveItem(Guid productId)
         {
-            var item = Items.FirstOrDefault(i => i.ProductId == productId);
+            var item = _items.FirstOrDefault(i => i.ProductId == productId); 
             if (item != null)
             {
-                Items.Remove(item);
+                _items.Remove(item);
             }
         }
     }
