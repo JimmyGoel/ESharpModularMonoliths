@@ -12,7 +12,7 @@ global using Microsoft.AspNetCore.Http;
 global using Microsoft.AspNetCore.Mvc;
 global using Microsoft.AspNetCore.Routing;
 global using Microsoft.EntityFrameworkCore;
-global using Shared.CQRS;
+global using Shared.Contract.CQRS;
 global using Shared.Data;
 global using Shared.Data.Interceptor;
 global using Shared.DDD;
