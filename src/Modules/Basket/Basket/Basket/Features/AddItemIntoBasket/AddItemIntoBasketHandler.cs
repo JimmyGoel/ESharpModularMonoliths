@@ -1,4 +1,6 @@
 ﻿
+using Catalog.Contracts.Products.Features.GetProductById;
+
 namespace Basket.Basket.Features.AddItemIntoBasket
 {
     public record AddItemIntoBasketCommand(string UserName, ShoppingCartItemDto Item)
@@ -14,19 +16,26 @@ namespace Basket.Basket.Features.AddItemIntoBasket
             RuleFor(x => x.Item.Quantity).GreaterThan(0).WithMessage("Quantity must be greater then 0");
         }
     }
-    public class AddItemIntoBasketHandler(IBasketRepository basketRepository) : ICommandHandler<AddItemIntoBasketCommand, AddItemIntoBasketResult>
+    public class AddItemIntoBasketHandler
+        (IBasketRepository basketRepository, ISender sender)
+        : ICommandHandler<AddItemIntoBasketCommand, AddItemIntoBasketResult>
     {
         public async Task<AddItemIntoBasketResult> Handle(AddItemIntoBasketCommand request, CancellationToken cancellationToken)
         {
             var shoppingCart = await basketRepository.GetBasket(request.UserName, false, cancellationToken: cancellationToken);
+
+            var productResult = await sender.Send(new GetProductsByIdQuery(request.Item.ProductId), cancellationToken);
+
             var item = new ShoppingCartItem
                (
                    request.Item.Id,
                    request.Item.ProductId,
                    request.Item.Quantity,
-                   request.Item.ProductName,
-                   request.Item.Price,
-                   request.Item.Color
+                   request.Item.Color,
+                   productResult.Product.Price,
+                   //request.Item.ProductName,
+                   //request.Item.Price,
+                   productResult.Product.Name
                );
 
             shoppingCart?.AddItem(item);
