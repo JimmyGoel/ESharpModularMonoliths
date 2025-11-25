@@ -23,6 +23,11 @@ builder.Services.AddStackExchangeRedisCache(options =>
     options.Configuration = builder.Configuration.GetConnectionString("Redis");
 });
 
+builder.Services.AddMassTransitWithRabbitMq(
+    catalogAssembly,
+    basketAssembly
+    );
+
 //builder.Services.AddValidatorsFromAssemblies([catalogAssembly, basketAssembly]);
 
 // module Services
