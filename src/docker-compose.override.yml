@@ -31,6 +31,16 @@ services:
       - "5341:5341"
     volumes:
       - seq-data:/data
+  messagebus:
+    container_name: messagebus
+    hostname: ecommerce-rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    restart: always
+    ports:
+      - "5672:5672"
+      - "15672:15672"
 volumes:
   seq-data:
 
