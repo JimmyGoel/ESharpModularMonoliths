@@ -17,7 +17,8 @@ namespace Basket.Basket.Features.GetBasket
           .Produces<GetBasketResponse>(StatusCodes.Status201Created)
           .ProducesProblem(StatusCodes.Status400BadRequest)
           .WithSummary("Basket Details.")
-          .WithDescription("Basket Details.");
+          .WithDescription("Basket Details.")
+          .RequireAuthorization();
         }
     }
 }

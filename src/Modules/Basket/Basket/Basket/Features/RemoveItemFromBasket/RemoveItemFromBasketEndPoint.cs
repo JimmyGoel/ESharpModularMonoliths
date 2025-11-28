@@ -23,7 +23,8 @@ namespace Basket.Basket.Features.RemoveItemFromBasket
             .Produces<RemoveItemFromBasketResponse>(StatusCodes.Status201Created)
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .WithSummary("Remove Item Basket")
-            .WithDescription("Remove Item Basket.");
+            .WithDescription("Remove Item Basket.")
+            .RequireAuthorization();
         }
 
     }

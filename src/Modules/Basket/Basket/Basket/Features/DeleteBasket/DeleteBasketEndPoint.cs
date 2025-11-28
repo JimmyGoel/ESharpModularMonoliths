@@ -18,7 +18,8 @@ namespace Basket.Basket.Features.DeleteBasket
             .Produces<DeleteBasketResponse>(StatusCodes.Status201Created)
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .WithSummary("Delete Basket")
-            .WithDescription("Delete Basket.");
+            .WithDescription("Delete Basket.")
+            .RequireAuthorization();
 
 
         }

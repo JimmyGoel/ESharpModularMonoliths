@@ -21,7 +21,8 @@ namespace Basket.Basket.Features.AddItemIntoBasket
            .Produces<AddItemIntoBasketResponse>(StatusCodes.Status201Created)
            .ProducesProblem(StatusCodes.Status400BadRequest)
            .WithSummary("Add Basket Basket")
-           .WithDescription("Add Basket Basket with the provided details.");
+           .WithDescription("Add Basket Basket with the provided details.")
+           .RequireAuthorization();
         }
     }
 }
