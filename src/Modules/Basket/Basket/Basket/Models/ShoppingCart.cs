@@ -39,7 +39,7 @@ namespace Basket.Basket.Models
         }
         public void RemoveItem(Guid productId)
         {
-            var item = _items.FirstOrDefault(i => i.ProductId == productId); 
+            var item = _items.FirstOrDefault(i => i.ProductId == productId);
             if (item != null)
             {
                 _items.Remove(item);

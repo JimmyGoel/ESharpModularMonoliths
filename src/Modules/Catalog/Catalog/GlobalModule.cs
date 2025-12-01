@@ -1,4 +1,6 @@
 ﻿global using Carter;
+global using Catalog.Contracts.Products.Dtos;
+global using Catalog.Contracts.Products.Features.GetProductById;
 global using Catalog.Data;
 global using Catalog.Data.Seed;
 global using Catalog.Products.Events;
@@ -21,5 +23,3 @@ global using Shared.DDD;
 global using Shared.Exceptions;
 global using Shared.Pagination;
 global using System.Reflection;
-global using Catalog.Contracts.Products.Dtos;
-global using Catalog.Contracts.Products.Features.GetProductById;
