@@ -1,6 +1,21 @@
-﻿namespace Ordering
-{
-    internal class GlobalUsing
-    {
-    }
-}
+﻿global using Ordering.Orders.ValueObjects;
+global using Shared.DDD;
+global using Ordering.Orders.Events;
+global using MediatR;
+global using Microsoft.Extensions.Logging;
+global using Ordering.Orders.Models;
+global using Ordering.Data;
+global using Shared.Data.Interceptor;
+global using Shared.Data;
+global using FluentValidation;
+global using Ordering.Orders.DTOs;
+global using Shared.Contract.CQRS;
+global using System.Runtime.CompilerServices;
+global using Ordering.Orders.Exceptions;
+global using Microsoft.EntityFrameworkCore;
+global using Carter;
+global using Microsoft.AspNetCore.Routing;
+global using Microsoft.AspNetCore.Builder;
+global using Mapster;
+global using Microsoft.AspNetCore.Http;
+global using Shared.Pagination;

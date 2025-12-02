@@ -11,15 +11,16 @@ builder.Host.UseSerilog((context, config) =>
 // Add services to the container.
 var catalogAssembly = typeof(CatalogModule).Assembly;
 var basketAssembly = typeof(BasketModule).Assembly;
+var orderingAssembly = typeof(OrderingModule).Assembly;
 
 // Common Services
 builder.Services.AddCarterWithAssemblies(
-   catalogAssembly, basketAssembly
+   catalogAssembly, basketAssembly, orderingAssembly
     );
 
 builder.Services.AddMediatRWithAssemblies(
     catalogAssembly,
-    basketAssembly);
+    basketAssembly, orderingAssembly);
 builder.Services.AddStackExchangeRedisCache(options =>
 {
     options.Configuration = builder.Configuration.GetConnectionString("Redis");
