@@ -1,17 +1,38 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace Basket.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class InitalCreate : Migration
+    public partial class IntialCreation : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.EnsureSchema(
                 name: "basket");
+
+            migrationBuilder.CreateTable(
+                name: "outboxMessages",
+                schema: "basket",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Type = table.Column<string>(type: "text", nullable: false),
+                    Data = table.Column<string>(type: "text", nullable: false),
+                    OccuredOn = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    ProcessedOn = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    LastModified = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    CreatedBy = table.Column<string>(type: "text", nullable: true),
+                    LastModifiedBy = table.Column<string>(type: "text", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_outboxMessages", x => x.Id);
+                });
 
             migrationBuilder.CreateTable(
                 name: "ShoppingCarts",
@@ -76,6 +97,10 @@ namespace Basket.Data.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "outboxMessages",
+                schema: "basket");
+
             migrationBuilder.DropTable(
                 name: "ShoppingCartItems",
                 schema: "basket");

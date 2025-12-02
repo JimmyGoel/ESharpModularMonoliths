@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Basket.Data.Migrations
 {
     [DbContext(typeof(BasketDbContext))]
-    [Migration("20251109080010_InitalCreate")]
-    partial class InitalCreate
+    [Migration("20251202062815_IntialCreation")]
+    partial class IntialCreation
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,6 +25,43 @@ namespace Basket.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+
+            modelBuilder.Entity("Basket.Basket.Models.OutboxMessage", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Data")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("LastModified")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("OccuredOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("ProcessedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("outboxMessages", "basket");
+                });
 
             modelBuilder.Entity("Basket.Basket.Models.ShoppingCart", b =>
                 {

@@ -7,7 +7,7 @@
         }
         public DbSet<ShoppingCart> ShoppingCarts => Set<ShoppingCart>();
         public DbSet<ShoppingCartItem> ShoppingCartItems => Set<ShoppingCartItem>();
-
+        public DbSet<OutboxMessage> outboxMessages => Set<OutboxMessage>();
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
