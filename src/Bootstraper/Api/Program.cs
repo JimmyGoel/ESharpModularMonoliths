@@ -29,7 +29,8 @@ builder.Services.AddStackExchangeRedisCache(options =>
 builder.Services.AddMassTransitWithRabbitMq(
     builder.Configuration,
     catalogAssembly,
-    basketAssembly
+    basketAssembly,
+    orderingAssembly
     );
 
 //builder.Services.AddValidatorsFromAssemblies([catalogAssembly, basketAssembly]);

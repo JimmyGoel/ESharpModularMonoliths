@@ -1,6 +1,4 @@
 ﻿
-using Basket.Basket.Features.CreateBasket;
-
 namespace Basket.Basket.Features.CheckoutBasket
 {
     public record CheckOutBasketRequest(BasketCheckoutDTos BasketCheckout);
@@ -12,7 +10,15 @@ namespace Basket.Basket.Features.CheckoutBasket
             app.MapPost("/basket/checkout", async (CheckOutBasketRequest request, ISender sender) =>
             {
 
-                var command = request.Adapt<CreateBasketCommand>();
+                var command = request.Adapt<CheckoutBasketCommand>();
+
+                command = command with
+                {
+                    BasketCheckout = command.BasketCheckout with
+                    {
+                        cvv = request.BasketCheckout.cvv
+                    }
+                };
 
                 var result = await sender.Send(command);
 
